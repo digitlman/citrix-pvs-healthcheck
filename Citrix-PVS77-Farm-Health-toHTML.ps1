@@ -228,48 +228,108 @@ param($title, $fileName)
 $date = $ReportDate
 $head = @"
 <html>
-<head>
-<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
-<title>$title</title>
-<STYLE TYPE="text/css">
-<!--
-td {
-font-family: Tahoma;
-font-size: 11px;
-border-top: 1px solid #999999;
-border-right: 1px solid #999999;
-border-bottom: 1px solid #999999;
-border-left: 1px solid #999999;
-padding-top: 0px;
-padding-right: 0px;
-padding-bottom: 0px;
-padding-left: 0px;
-overflow: hidden;
-}
-body {
-margin-left: 5px;
-margin-top: 5px;
-margin-right: 0px;
-margin-bottom: 10px;
-table {
-table-layout:fixed; 
-border: thin solid #000000;
-}
--->
-</style>
-</head>
-<body>
-<table width='1200'>
-<tr bgcolor='#CCCCCC'>
-<td colspan='7' height='48' align='center' valign="middle">
-<font face='tahoma' color='#003399' size='4'>
-<strong>$title - $date</strong></font>
-</td>
-</tr>
-</table>
+    <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+    <meta http-equiv="refresh" content="60">
+    <title>$title</title>
+    <STYLE TYPE="text/css">
+    <!--
+    td {
+        font-family: Lao UI;
+        font-size: 11px;
+        border-top: 1px solid #999999;
+        border-right: 1px solid #999999;
+        border-bottom: 1px solid #999999;
+        border-left: 1px solid #999999;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+        overflow: hidden;}
+
+    .header {
+	    font-family: Tahoma;
+		font-size: 40px;
+		font-weight:bold;
+		border-top: 1px solid #999999;
+		border-right: 1px solid #999999;
+		border-bottom: 1px solid #999999;
+		border-left: 1px solid #999999;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+        overflow: hidden;
+		color:#FFFFFF;
+		text-shadow:2px 2px 10px #000000;
+
+        }
+    body {
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        table {
+            table-layout:fixed;
+            border: thin solid #FFFFFF;}
+	.shadow {
+		height: 1em;
+		filter: Glow(Color=#000000,
+		Direction=135,
+		Strength=5);}
+        -->
+    </style>
+    </head>
+    <body>
+        
+        <table width='100%'>
+        <tr bgcolor='#CCCCCC'>
+        <td width=33% align='center' valign="middle">
+        <font face='Tahoma' color='#8A0808' size='2'><strong>Farm Last Queried: $date</strong></font>
+        </td>
+        <td width=33% align='center' valign="middle">
+        <font face='Tahoma' color='#8A0808' size='2'>
+        <strong>Page Last Refresfed: 
+        <script type="text/javascript">
+        <!--
+        var currentTime = new Date()
+        var month = currentTime.getMonth() + 1
+        var day = currentTime.getDate()
+        var year = currentTime.getFullYear()
+        var hours = currentTime.getHours()
+        var minutes = currentTime.getMinutes()
+        if (minutes < 10){
+        minutes = "0" + minutes
+        }
+        document.write(month + "/" + day + "/" + year + " " + hours + ":" + minutes + " ")
+        if(hours > 11){
+        document.write("PM")
+        } else {
+        document.write("AM")
+        }
+        //-->
+        </script>
+        </strong>
+        </td>
+        <td width=33% align='center' valign="middle">
+        <font face='Tahoma' color='#8A0808' size='2'>
+        <strong>Auto-Refresh in <span id="CDTimer">180</span> secs.</font></strong>
+        <script language="JavaScript" type="text/javascript">
+        /*<![CDATA[*/
+        var TimerVal = 60;
+        var TimerSPan = document.getElementById("CDTimer");
+        function CountDown(){
+        setTimeout( "CountDown()", 1000 );
+        TimerSPan.innerHTML=TimerVal;
+        TimerVal=TimerVal-1;
+        } CountDown() /*]]>*/ </script>
+       
+        </table>
 "@
 $head | Out-File $fileName
 }
+
+
 # ==============================================================================================
 Function writeTableHeader
 {
